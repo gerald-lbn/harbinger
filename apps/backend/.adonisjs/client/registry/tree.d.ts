@@ -16,4 +16,9 @@ export interface ApiDefinition {
       show: typeof routes['profile.profile.show']
     }
   }
+  feeds: {
+    feeds: {
+      show: typeof routes['feeds.feeds.show']
+    }
+  }
 }
