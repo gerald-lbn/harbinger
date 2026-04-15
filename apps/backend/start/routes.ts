@@ -33,5 +33,13 @@ router
       .prefix('account')
       .as('profile')
       .use(middleware.auth())
+
+    router
+      .group(() => {
+        router.get(':id', [controllers.Feeds, 'show'])
+      })
+      .prefix('feeds')
+      .as('feeds')
+      .use(middleware.auth())
   })
   .prefix('/api/v1')
