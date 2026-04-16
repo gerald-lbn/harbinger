@@ -45,6 +45,7 @@ router
     router
       .group(() => {
         router.get('', [controllers.Subscriptions, 'index'])
+        router.delete(':id', [controllers.Subscriptions, 'destroy'])
       })
       .prefix('subscriptions')
       .as('subscriptions')
