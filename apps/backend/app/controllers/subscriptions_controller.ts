@@ -14,7 +14,7 @@ export default class SubscriptionsController {
   constructor(
     private subscription_service: SubscriptionService,
     private discovery_service: FeedDiscoveryService
-  ) { }
+  ) {}
 
   /**
    * Display a list of resource
@@ -29,16 +29,16 @@ export default class SubscriptionsController {
   /**
    * Display form to create a new record
    */
-  async create({ }: HttpContext) { }
+  async create({}: HttpContext) {}
 
   /**
    * Handle form submission for the create action
    */
   async store({ auth, request, response, serialize }: HttpContext) {
-    const { feed_url } = await request.validateUsing(createSubscriptionValidator)
+    const { feed_url: feedUrl } = await request.validateUsing(createSubscriptionValidator)
     const user = auth.getUserOrFail()
 
-    const options = await this.discovery_service.discover(feed_url)
+    const options = await this.discovery_service.discover(feedUrl)
 
     if (options.length === 0) {
       return response.notFound({ message: 'No feed found at the provided URL' })
@@ -72,7 +72,7 @@ export default class SubscriptionsController {
   /**
    * Edit individual record
    */
-  async edit({}: HttpContext) { }
+  async edit({}: HttpContext) {}
 
   /**
    * Handle form submission for the edit action
@@ -84,7 +84,11 @@ export default class SubscriptionsController {
     })
 
     const user = auth.getUserOrFail()
-    const subscription = await this.subscription_service.updateUserSubscriptionTitle(user, id, title)
+    const subscription = await this.subscription_service.updateUserSubscriptionTitle(
+      user,
+      id,
+      title
+    )
 
     if (!subscription) return response.notFound()
 
