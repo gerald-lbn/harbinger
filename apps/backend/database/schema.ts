@@ -45,6 +45,21 @@ export class FeedSchema extends BaseModel {
   declare url: string
 }
 
+export class SubscriptionSchema extends BaseModel {
+  static $columns = ['createdAt', 'feedId', 'id', 'title', 'userId'] as const
+  $columns = SubscriptionSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare feedId: number
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare title: string
+  @column()
+  declare userId: number
+}
+
 export class UserSchema extends BaseModel {
   static $columns = ['createdAt', 'email', 'fullName', 'id', 'password', 'updatedAt'] as const
   $columns = UserSchema.$columns
