@@ -41,5 +41,13 @@ router
       .prefix('feeds')
       .as('feeds')
       .use(middleware.auth())
+
+    router
+      .group(() => {
+        router.get('', [controllers.Subscriptions, 'index'])
+      })
+      .prefix('subscriptions')
+      .as('subscriptions')
+      .use(middleware.auth())
   })
   .prefix('/api/v1')
