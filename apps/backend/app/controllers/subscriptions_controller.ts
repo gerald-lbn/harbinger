@@ -1,5 +1,5 @@
 import SubscriptionTransformer from '#transformers/subscription_transformer'
-import { deleteSubscriptionByIdSchema, updateSubscriptionSchema } from '#validators/subscription'
+import { subscriptionIdSchema, updateSubscriptionSchema } from '#validators/subscription'
 import type { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
 
@@ -31,7 +31,24 @@ export default class SubscriptionsController {
   /**
    * Show individual record
    */
-  async show({ params }: HttpContext) {}
+  async show({ auth, params, response, serialize }: HttpContext) {
+    const { id } = await vine.validate({
+      schema: subscriptionIdSchema,
+      data: params,
+    })
+
+    const user = auth.getUserOrFail()
+    const subscription = await user
+      .related('subscriptions')
+      .query()
+      .where('id', id)
+      .preload('feed')
+      .first()
+
+    if (!subscription) return response.notFound()
+
+    return serialize(SubscriptionTransformer.transform(subscription))
+  }
 
   /**
    * Edit individual record
@@ -65,7 +82,7 @@ export default class SubscriptionsController {
    * Delete record
    */
   async destroy({ auth, params, response }: HttpContext) {
-    const { id } = await vine.validate({ schema: deleteSubscriptionByIdSchema, data: params })
+    const { id } = await vine.validate({ schema: subscriptionIdSchema, data: params })
 
     const user = auth.getUserOrFail()
     const subscription = await user.related('subscriptions').query().where('id', id).first()

@@ -47,6 +47,7 @@ router
         router.get('', [controllers.Subscriptions, 'index'])
         router.delete(':id', [controllers.Subscriptions, 'destroy'])
         router.patch(':id', [controllers.Subscriptions, 'update'])
+        router.get(':id', [controllers.Subscriptions, 'show'])
       })
       .prefix('subscriptions')
       .as('subscriptions')

@@ -1,6 +1,6 @@
 import vine from '@vinejs/vine'
 
-export const deleteSubscriptionByIdSchema = vine.object({
+export const subscriptionIdSchema = vine.object({
   id: vine.number(),
 })
 
