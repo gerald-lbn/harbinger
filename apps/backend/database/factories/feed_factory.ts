@@ -1,5 +1,6 @@
 import factory from '@adonisjs/lucid/factories'
 import Feed from '#models/feed'
+import { EntryFactory } from '#database/factories/entry_factory'
 
 export const FeedFactory = factory
   .define(Feed, async ({ faker }) => {
@@ -10,4 +11,5 @@ export const FeedFactory = factory
       url: `${url}/feed.xml`,
     }
   })
+  .relation('entries', () => EntryFactory)
   .build()

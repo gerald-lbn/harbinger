@@ -33,16 +33,22 @@ export class AuthAccessTokenSchema extends BaseModel {
 }
 
 export class EntrySchema extends BaseModel {
-  static $columns = ['createdAt', 'feedId', 'id', 'updatedAt'] as const
+  static $columns = ['author', 'content', 'createdAt', 'feedId', 'id', 'title', 'url'] as const
   $columns = EntrySchema.$columns
+  @column()
+  declare author: string | null
+  @column()
+  declare content: string | null
   @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime | null
+  declare createdAt: DateTime
   @column()
   declare feedId: number
   @column({ isPrimary: true })
   declare id: number
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime | null
+  @column()
+  declare title: string
+  @column()
+  declare url: string
 }
 
 export class FeedSchema extends BaseModel {
