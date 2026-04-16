@@ -1,4 +1,4 @@
-import Subscription from '#models/subscription'
+import type Subscription from '#models/subscription'
 import type User from '#models/user'
 
 export class SubscriptionService {
