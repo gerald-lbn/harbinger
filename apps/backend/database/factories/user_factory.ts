@@ -10,5 +10,5 @@ export const UserFactory = factory
       password: faker.internet.password(),
     }
   })
-  .relation('subscriptions', SubscriptionFactory)
+  .relation('subscriptions', () => SubscriptionFactory)
   .build()
