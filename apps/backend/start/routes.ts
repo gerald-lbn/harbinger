@@ -45,6 +45,7 @@ router
     router
       .group(() => {
         router.get('', [controllers.Subscriptions, 'index'])
+        router.post('', [controllers.Subscriptions, 'store'])
         router.delete(':id', [controllers.Subscriptions, 'destroy'])
         router.patch(':id', [controllers.Subscriptions, 'update'])
         router.get(':id', [controllers.Subscriptions, 'show'])

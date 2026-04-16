@@ -1,13 +1,20 @@
+import { FeedDiscoveryService } from '#services/feed_discovery_service'
 import { SubscriptionService } from '#services/subscription_service'
 import SubscriptionTransformer from '#transformers/subscription_transformer'
-import { subscriptionIdSchema, updateSubscriptionSchema } from '#validators/subscription'
+import {
+  createSubscriptionValidator,
+  subscriptionIdValidator,
+  updateSubscriptionValidator,
+} from '#validators/subscription'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
-import vine from '@vinejs/vine'
 
 @inject()
 export default class SubscriptionsController {
-  constructor(private subscription_service: SubscriptionService) {}
+  constructor(
+    private subscription_service: SubscriptionService,
+    private discovery_service: FeedDiscoveryService
+  ) { }
 
   /**
    * Display a list of resource
@@ -22,21 +29,37 @@ export default class SubscriptionsController {
   /**
    * Display form to create a new record
    */
-  async create({}: HttpContext) {}
+  async create({ }: HttpContext) { }
 
   /**
    * Handle form submission for the create action
    */
-  async store({ request }: HttpContext) {}
+  async store({ auth, request, response, serialize }: HttpContext) {
+    const { feed_url } = await request.validateUsing(createSubscriptionValidator)
+    const user = auth.getUserOrFail()
+
+    const options = await this.discovery_service.discover(feed_url)
+
+    if (options.length === 0) {
+      return response.notFound({ message: 'No feed found at the provided URL' })
+    }
+
+    if (options.length > 1) {
+      return response.multipleChoices({ data: options })
+    }
+
+    const { subscription, status } = await this.subscription_service.subscribe(user, options[0])
+    const transformed = await serialize(SubscriptionTransformer.transform(subscription))
+
+    response.header('Location', `/api/v1/subscriptions/${subscription.id}`)
+    return response.status(status).send(transformed)
+  }
 
   /**
    * Show individual record
    */
   async show({ auth, params, response, serialize }: HttpContext) {
-    const { id } = await vine.validate({
-      schema: subscriptionIdSchema,
-      data: params,
-    })
+    const { id } = await subscriptionIdValidator.validate(params)
 
     const user = auth.getUserOrFail()
     const subscription = await this.subscription_service.getUserSubscriptionAndFeedById(user, id)
@@ -49,15 +72,15 @@ export default class SubscriptionsController {
   /**
    * Edit individual record
    */
-  async edit({ params }: HttpContext) {}
+  async edit({}: HttpContext) { }
 
   /**
    * Handle form submission for the edit action
    */
   async update({ auth, params, request, response, serialize }: HttpContext) {
-    const { id, title } = await vine.validate({
-      schema: updateSubscriptionSchema,
-      data: { ...params, ...request.body() },
+    const { id, title } = await updateSubscriptionValidator.validate({
+      ...params,
+      ...request.body(),
     })
 
     const user = auth.getUserOrFail()
@@ -72,7 +95,7 @@ export default class SubscriptionsController {
    * Delete record
    */
   async destroy({ auth, params, response }: HttpContext) {
-    const { id } = await vine.validate({ schema: subscriptionIdSchema, data: params })
+    const { id } = await subscriptionIdValidator.validate(params)
     const user = auth.getUserOrFail()
 
     const deleted = await this.subscription_service.deleteUserSubscriptionById(user, id)
