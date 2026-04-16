@@ -1,19 +1,20 @@
+import { SubscriptionService } from '#services/subscription_service'
 import SubscriptionTransformer from '#transformers/subscription_transformer'
 import { subscriptionIdSchema, updateSubscriptionSchema } from '#validators/subscription'
+import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
 
+@inject()
 export default class SubscriptionsController {
+  constructor(private subscription_service: SubscriptionService) {}
+
   /**
    * Display a list of resource
    */
   async index({ auth, serialize }: HttpContext) {
     const user = auth.getUserOrFail()
-    const subscriptions = await user
-      .related('subscriptions')
-      .query()
-      .preload('feed')
-      .orderBy('created_at', 'desc')
+    const subscriptions = await this.subscription_service.getUserSubscriptions(user)
 
     return serialize(SubscriptionTransformer.transform(subscriptions))
   }
@@ -38,12 +39,7 @@ export default class SubscriptionsController {
     })
 
     const user = auth.getUserOrFail()
-    const subscription = await user
-      .related('subscriptions')
-      .query()
-      .where('id', id)
-      .preload('feed')
-      .first()
+    const subscription = await this.subscription_service.getUserSubscriptionAndFeedById(user, id)
 
     if (!subscription) return response.notFound()
 
@@ -65,16 +61,10 @@ export default class SubscriptionsController {
     })
 
     const user = auth.getUserOrFail()
-    const subscription = await user
-      .related('subscriptions')
-      .query()
-      .where('id', id)
-      .preload('feed')
-      .first()
+    const subscription = await this.subscription_service.updateUserSubscriptionTitle(user, id, title)
 
     if (!subscription) return response.notFound()
 
-    await subscription.merge({ title }).save()
     return serialize(SubscriptionTransformer.transform(subscription))
   }
 
@@ -83,13 +73,11 @@ export default class SubscriptionsController {
    */
   async destroy({ auth, params, response }: HttpContext) {
     const { id } = await vine.validate({ schema: subscriptionIdSchema, data: params })
-
     const user = auth.getUserOrFail()
-    const subscription = await user.related('subscriptions').query().where('id', id).first()
 
-    if (!subscription) return response.notFound()
+    const deleted = await this.subscription_service.deleteUserSubscriptionById(user, id)
+    if (!deleted) return response.notFound()
 
-    await subscription.delete()
     return response.noContent()
   }
 }
