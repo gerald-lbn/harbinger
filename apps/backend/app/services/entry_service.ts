@@ -3,7 +3,6 @@ import Entry from '#models/entry'
 import { inject } from '@adonisjs/core'
 import { DateTime } from 'luxon'
 
-
 export interface GetFeedEntriesOptions {
   page?: number
   since?: Date
@@ -22,11 +21,7 @@ export class EntryService {
     feedId: number,
     options?: GetFeedEntriesOptions
   ): Promise<Entry[]> {
-    const subscription = await user
-      .related('subscriptions')
-      .query()
-      .where('feedId', feedId)
-      .first()
+    const subscription = await user.related('subscriptions').query().where('feedId', feedId).first()
 
     if (!subscription) {
       return []
