@@ -10,6 +10,9 @@ export default class extends BaseSchema {
       table.integer('feed_id').references('id').inTable('feeds').notNullable().onDelete('cascade')
       table.integer('user_id').references('id').inTable('users').notNullable().onDelete('cascade')
       table.string('title').notNullable()
+
+      table.unique(['feed_id', 'user_id'])
+      table.index(['feed_id'])
     })
   }
 

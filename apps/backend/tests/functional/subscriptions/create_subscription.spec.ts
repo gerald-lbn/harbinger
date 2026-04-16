@@ -100,5 +100,25 @@ test.group('Create subscription', (group) => {
     })
     response.assertStatus(401)
   })
+
+  test('forbids creating duplicate subscriptions for the same feed', async ({ assert, client }) => {
+    const user = await UserFactory.create()
+    const feedUrl = 'https://duplicate.com/feed'
+
+    class MockDiscovery extends FeedDiscoveryService {
+      override async discover(_url: string): Promise<FeedOption[]> {
+        return [{ feed_url: feedUrl, title: 'Duplicate' }]
+      }
+    }
+
+    app.container.swap(FeedDiscoveryService, () => new MockDiscovery())
+
+    await client.post('/api/v1/subscriptions').loginAs(user).json({ feed_url: feedUrl })
+    const response = await client.post('/api/v1/subscriptions').loginAs(user).json({ feed_url: feedUrl })
+
+    const subscriptions = await user.related('subscriptions').query()
+    assert.lengthOf(subscriptions, 1)
+    response.assertStatus(200)
+  })
 })
 

@@ -32,6 +32,19 @@ export class AuthAccessTokenSchema extends BaseModel {
   declare updatedAt: DateTime | null
 }
 
+export class EntrySchema extends BaseModel {
+  static $columns = ['createdAt', 'feedId', 'id', 'updatedAt'] as const
+  $columns = EntrySchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column()
+  declare feedId: number
+  @column({ isPrimary: true })
+  declare id: number
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
 export class FeedSchema extends BaseModel {
   static $columns = ['id', 'site', 'title', 'url'] as const
   $columns = FeedSchema.$columns
