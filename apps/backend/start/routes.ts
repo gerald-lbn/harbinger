@@ -37,6 +37,7 @@ router
     router
       .group(() => {
         router.get(':id', [controllers.Feeds, 'show'])
+        router.get(':feed_id/entries', [controllers.Entries, 'index'])
       })
       .prefix('feeds')
       .as('feeds')
