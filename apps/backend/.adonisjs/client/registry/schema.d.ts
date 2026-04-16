@@ -67,4 +67,16 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/feeds_controller').default['show']>>>
     }
   }
+  'subscriptions.subscriptions.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/subscriptions'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/subscriptions_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/subscriptions_controller').default['index']>>>
+    }
+  }
 }

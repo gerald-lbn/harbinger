@@ -21,4 +21,9 @@ export interface ApiDefinition {
       show: typeof routes['feeds.feeds.show']
     }
   }
+  subscriptions: {
+    subscriptions: {
+      index: typeof routes['subscriptions.subscriptions.index']
+    }
+  }
 }

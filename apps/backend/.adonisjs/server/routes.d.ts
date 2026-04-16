@@ -9,14 +9,17 @@ export type ScannedRoutes = {
     'auth.access_token.destroy': { paramsTuple?: []; params?: {} }
     'profile.profile.show': { paramsTuple?: []; params?: {} }
     'feeds.feeds.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'subscriptions.subscriptions.index': { paramsTuple?: []; params?: {} }
   }
   GET: {
     'profile.profile.show': { paramsTuple?: []; params?: {} }
     'feeds.feeds.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'subscriptions.subscriptions.index': { paramsTuple?: []; params?: {} }
   }
   HEAD: {
     'profile.profile.show': { paramsTuple?: []; params?: {} }
     'feeds.feeds.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'subscriptions.subscriptions.index': { paramsTuple?: []; params?: {} }
   }
   POST: {
     'auth.new_account.store': { paramsTuple?: []; params?: {} }

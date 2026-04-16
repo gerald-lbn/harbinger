@@ -6,20 +6,20 @@
 /// <reference path="./manifest.d.ts" />
 import type { InferData, InferVariants } from '@adonisjs/core/types/transformers'
 import type FeedTransformer from '#transformers/feed_transformer'
-import type UserTransformer from '#transformers/user_transformer'
 import type SubscriptionTransformer from '#transformers/subscription_transformer'
+import type UserTransformer from '#transformers/user_transformer'
 
 export namespace Data {
   export type Feed = InferData<FeedTransformer>
   export namespace Feed {
     export type Variants = InferVariants<FeedTransformer>
   }
-  export type User = InferData<UserTransformer>
-  export namespace User {
-    export type Variants = InferVariants<UserTransformer>
-  }
   export type Subscription = InferData<SubscriptionTransformer>
   export namespace Subscription {
     export type Variants = InferVariants<SubscriptionTransformer>
+  }
+  export type User = InferData<UserTransformer>
+  export namespace User {
+    export type Variants = InferVariants<UserTransformer>
   }
 }

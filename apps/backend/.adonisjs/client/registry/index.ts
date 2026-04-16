@@ -36,6 +36,12 @@ const routes = {
     tokens: [{"old":"/api/v1/feeds/:id","type":0,"val":"api","end":""},{"old":"/api/v1/feeds/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/feeds/:id","type":0,"val":"feeds","end":""},{"old":"/api/v1/feeds/:id","type":1,"val":"id","end":""}],
     types: placeholder as Registry['feeds.feeds.show']['types'],
   },
+  'subscriptions.subscriptions.index': {
+    methods: ["GET","HEAD"],
+    pattern: '/api/v1/subscriptions',
+    tokens: [{"old":"/api/v1/subscriptions","type":0,"val":"api","end":""},{"old":"/api/v1/subscriptions","type":0,"val":"v1","end":""},{"old":"/api/v1/subscriptions","type":0,"val":"subscriptions","end":""}],
+    types: placeholder as Registry['subscriptions.subscriptions.index']['types'],
+  },
 } as const satisfies Record<string, AdonisEndpoint>
 
 export { routes }
