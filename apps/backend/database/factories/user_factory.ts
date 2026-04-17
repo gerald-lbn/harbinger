@@ -1,6 +1,7 @@
 import factory from '@adonisjs/lucid/factories'
 import User from '#models/user'
 import { SubscriptionFactory } from '#database/factories/subscription_factory'
+import { RecentlyReadEntryFactory } from '#database/factories/recently_read_entry_factory'
 
 export const UserFactory = factory
   .define(User, async ({ faker }) => {
@@ -11,4 +12,5 @@ export const UserFactory = factory
     }
   })
   .relation('subscriptions', () => SubscriptionFactory)
+  .relation('recentlyReadEntries', () => RecentlyReadEntryFactory)
   .build()
