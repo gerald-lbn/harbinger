@@ -68,4 +68,27 @@ test.group('Tagging service', (group) => {
     assert.lengthOf(taggings, 1)
     assert.equal(taggings[0].tag.name, 'News')
   })
+
+  test('getTaggingById returns a tagging when it exists', async ({ assert }) => {
+    const service = new TaggingService()
+    const user = await UserFactory.create()
+    const feed = await FeedFactory.create()
+
+    const taggingOriginal = await TaggingFactory.merge({ userId: user.id, feedId: feed.id })
+      .with('tag', 1, (t) => t.merge({ userId: user.id, name: 'Tech' }))
+      .create()
+
+    const tagging = await service.getTaggingById(taggingOriginal.id)
+
+    assert.exists(tagging)
+    assert.equal(tagging?.id, taggingOriginal.id)
+    assert.equal(tagging?.tag.name, 'Tech')
+  })
+
+  test('getTaggingById returns null when it does not exist', async ({ assert }) => {
+    const service = new TaggingService()
+    const tagging = await service.getTaggingById(999)
+
+    assert.isNull(tagging)
+  })
 })
