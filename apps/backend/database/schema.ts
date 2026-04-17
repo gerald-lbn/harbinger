@@ -8,7 +8,18 @@ import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
 export class AuthAccessTokenSchema extends BaseModel {
-  static $columns = ['abilities', 'createdAt', 'expiresAt', 'hash', 'id', 'lastUsedAt', 'name', 'tokenableId', 'type', 'updatedAt'] as const
+  static $columns = [
+    'abilities',
+    'createdAt',
+    'expiresAt',
+    'hash',
+    'id',
+    'lastUsedAt',
+    'name',
+    'tokenableId',
+    'type',
+    'updatedAt',
+  ] as const
   $columns = AuthAccessTokenSchema.$columns
   @column()
   declare abilities: string
@@ -97,6 +108,30 @@ export class SubscriptionSchema extends BaseModel {
   declare id: number
   @column()
   declare title: string
+  @column()
+  declare userId: number
+}
+
+export class TaggingSchema extends BaseModel {
+  static $columns = ['feedId', 'id', 'tagId', 'userId'] as const
+  $columns = TaggingSchema.$columns
+  @column()
+  declare feedId: number
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare tagId: number
+  @column()
+  declare userId: number
+}
+
+export class TagSchema extends BaseModel {
+  static $columns = ['id', 'name', 'userId'] as const
+  $columns = TagSchema.$columns
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare name: string
   @column()
   declare userId: number
 }

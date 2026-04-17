@@ -8,6 +8,8 @@ import type { HasMany } from '@adonisjs/lucid/types/relations'
 import Subscription from '#models/subscription'
 import RecentlyReadEntry from '#models/recently_read_entry'
 import StarredEntry from '#models/starred_entry'
+import Tag from '#models/tag'
+import Tagging from '#models/tagging'
 
 export default class User extends compose(UserSchema, withAuthFinder(hash)) {
   static accessTokens = DbAccessTokensProvider.forModel(User)
@@ -21,6 +23,12 @@ export default class User extends compose(UserSchema, withAuthFinder(hash)) {
 
   @hasMany(() => StarredEntry)
   declare starredEntries: HasMany<typeof StarredEntry>
+
+  @hasMany(() => Tag)
+  declare tags: HasMany<typeof Tag>
+
+  @hasMany(() => Tagging)
+  declare taggings: HasMany<typeof Tagging>
 
   get initials() {
     const [first, last] = this.fullName ? this.fullName.split(' ') : this.email.split('@')
