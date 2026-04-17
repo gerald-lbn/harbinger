@@ -9,5 +9,6 @@ export const controllers = {
   Feeds: () => import('#controllers/feeds_controller'),
   NewAccount: () => import('#controllers/new_account_controller'),
   Profile: () => import('#controllers/profile_controller'),
+  RecentlyReadEntries: () => import('#controllers/recently_read_entries_controller'),
   Subscriptions: () => import('#controllers/subscriptions_controller'),
 }
