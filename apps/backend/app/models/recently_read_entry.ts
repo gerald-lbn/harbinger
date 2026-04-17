@@ -1,7 +1,7 @@
 import { RecentlyReadEntrySchema } from '#database/schema'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import { belongsTo } from '@adonisjs/lucid/orm'
-import User from '#models/users'
+import User from '#models/user'
 import Entry from '#models/entry'
 
 export default class RecentlyReadEntry extends RecentlyReadEntrySchema {
