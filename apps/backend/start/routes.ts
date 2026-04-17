@@ -63,5 +63,15 @@ router
       .prefix('recently_read_entries')
       .as('recently_read_entries')
       .use(middleware.auth())
+
+    router
+      .group(() => {
+        router.get('', [controllers.StarredEntries, 'index'])
+        router.post('', [controllers.StarredEntries, 'store'])
+        router.delete('', [controllers.StarredEntries, 'destroy'])
+      })
+      .prefix('starred_entries')
+      .as('starred_entries')
+      .use(middleware.auth())
   })
   .prefix('/api/v1')
