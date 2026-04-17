@@ -20,10 +20,30 @@ export interface ApiDefinition {
     feeds: {
       show: typeof routes['feeds.feeds.show']
     }
+    entries: {
+      index: typeof routes['feeds.entries.index']
+    }
   }
   subscriptions: {
     subscriptions: {
       index: typeof routes['subscriptions.subscriptions.index']
+      store: typeof routes['subscriptions.subscriptions.store']
+      destroy: typeof routes['subscriptions.subscriptions.destroy']
+      update: typeof routes['subscriptions.subscriptions.update']
+      show: typeof routes['subscriptions.subscriptions.show']
+    }
+  }
+  recentlyReadEntries: {
+    recentlyReadEntries: {
+      index: typeof routes['recently_read_entries.recently_read_entries.index']
+      store: typeof routes['recently_read_entries.recently_read_entries.store']
+    }
+  }
+  starredEntries: {
+    starredEntries: {
+      index: typeof routes['starred_entries.starred_entries.index']
+      store: typeof routes['starred_entries.starred_entries.store']
+      destroy: typeof routes['starred_entries.starred_entries.destroy']
     }
   }
 }

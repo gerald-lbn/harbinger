@@ -7,6 +7,7 @@
 import type { InferData, InferVariants } from '@adonisjs/core/types/transformers'
 import type FeedTransformer from '#transformers/feed_transformer'
 import type RecentlyReadEntryTransformer from '#transformers/recently_read_entry_transformer'
+import type StarredEntryTransformer from '#transformers/starred_entry_transformer'
 import type SubscriptionTransformer from '#transformers/subscription_transformer'
 import type UserTransformer from '#transformers/user_transformer'
 
@@ -18,6 +19,10 @@ export namespace Data {
   export type RecentlyReadEntry = InferData<RecentlyReadEntryTransformer>
   export namespace RecentlyReadEntry {
     export type Variants = InferVariants<RecentlyReadEntryTransformer>
+  }
+  export type StarredEntry = InferData<StarredEntryTransformer>
+  export namespace StarredEntry {
+    export type Variants = InferVariants<StarredEntryTransformer>
   }
   export type Subscription = InferData<SubscriptionTransformer>
   export namespace Subscription {
