@@ -64,6 +64,17 @@ export class FeedSchema extends BaseModel {
   declare url: string
 }
 
+export class RecentlyReadEntrySchema extends BaseModel {
+  static $columns = ['entryId', 'id', 'userId'] as const
+  $columns = RecentlyReadEntrySchema.$columns
+  @column()
+  declare entryId: number | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare userId: number | null
+}
+
 export class SubscriptionSchema extends BaseModel {
   static $columns = ['createdAt', 'feedId', 'id', 'title', 'userId'] as const
   $columns = SubscriptionSchema.$columns

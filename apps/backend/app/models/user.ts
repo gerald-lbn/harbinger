@@ -6,6 +6,7 @@ import { type AccessToken, DbAccessTokensProvider } from '@adonisjs/auth/access_
 import { hasMany } from '@adonisjs/lucid/orm'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
 import Subscription from '#models/subscription'
+import RecentlyReadEntry from '#models/recently_read_entry'
 
 export default class User extends compose(UserSchema, withAuthFinder(hash)) {
   static accessTokens = DbAccessTokensProvider.forModel(User)
@@ -13,6 +14,9 @@ export default class User extends compose(UserSchema, withAuthFinder(hash)) {
 
   @hasMany(() => Subscription)
   declare subscriptions: HasMany<typeof Subscription>
+
+  @hasMany(() => RecentlyReadEntry)
+  declare recentlyReadEntries: HasMany<typeof RecentlyReadEntry>
 
   get initials() {
     const [first, last] = this.fullName ? this.fullName.split(' ') : this.email.split('@')
