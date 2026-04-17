@@ -54,5 +54,14 @@ router
       .prefix('subscriptions')
       .as('subscriptions')
       .use(middleware.auth())
+
+    router
+      .group(() => {
+        router.get('', [controllers.RecentlyReadEntries, 'index'])
+        router.post('', [controllers.RecentlyReadEntries, 'store'])
+      })
+      .prefix('recently_read_entries')
+      .as('recently_read_entries')
+      .use(middleware.auth())
   })
   .prefix('/api/v1')
