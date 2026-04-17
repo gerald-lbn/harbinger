@@ -73,5 +73,16 @@ router
       .prefix('starred_entries')
       .as('starred_entries')
       .use(middleware.auth())
+
+    router
+      .group(() => {
+        router.get('', [controllers.Taggings, 'index'])
+        router.get(':id', [controllers.Taggings, 'show'])
+        router.post('', [controllers.Taggings, 'store'])
+        router.delete(':id', [controllers.Taggings, 'destroy'])
+      })
+      .prefix('taggings')
+      .as('taggings')
+      .use(middleware.auth())
   })
   .prefix('/api/v1')
