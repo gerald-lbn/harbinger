@@ -1,13 +1,13 @@
 import type User from '#models/user'
-import Tagging from '#models/tagging'
+import type Tagging from '#models/tagging'
 
 export class TaggingService {
   async getUserTaggings(user: User): Promise<Tagging[]> {
     return await user.related('taggings').query().preload('tag').orderBy('id', 'asc')
   }
 
-  async getTaggingById(id: number): Promise<Tagging | null> {
-    return await Tagging.query().where('id', id).preload('tag').first()
+  async getTaggingById(user: User, id: number): Promise<Tagging | null> {
+    return await user.related('taggings').query().where('id', id).preload('tag').first()
   }
 
   /**

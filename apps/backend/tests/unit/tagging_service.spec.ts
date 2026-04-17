@@ -78,7 +78,7 @@ test.group('Tagging service', (group) => {
       .with('tag', 1, (t) => t.merge({ userId: user.id, name: 'Tech' }))
       .create()
 
-    const tagging = await service.getTaggingById(taggingOriginal.id)
+    const tagging = await service.getTaggingById(user, taggingOriginal.id)
 
     assert.exists(tagging)
     assert.equal(tagging?.id, taggingOriginal.id)
@@ -87,7 +87,8 @@ test.group('Tagging service', (group) => {
 
   test('getTaggingById returns null when it does not exist', async ({ assert }) => {
     const service = new TaggingService()
-    const tagging = await service.getTaggingById(999)
+    const user = await UserFactory.create()
+    const tagging = await service.getTaggingById(user, 999)
 
     assert.isNull(tagging)
   })
@@ -104,7 +105,7 @@ test.group('Tagging service', (group) => {
     const deleted = await service.deleteTagging(user, tagging.id)
 
     assert.isTrue(deleted)
-    const exists = await service.getTaggingById(tagging.id)
+    const exists = await service.getTaggingById(user, tagging.id)
     assert.isNull(exists)
   })
 
