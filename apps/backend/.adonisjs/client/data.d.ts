@@ -9,6 +9,7 @@ import type FeedTransformer from '#transformers/feed_transformer'
 import type RecentlyReadEntryTransformer from '#transformers/recently_read_entry_transformer'
 import type StarredEntryTransformer from '#transformers/starred_entry_transformer'
 import type SubscriptionTransformer from '#transformers/subscription_transformer'
+import type TaggingTransformer from '#transformers/tagging_transformer'
 import type UserTransformer from '#transformers/user_transformer'
 
 export namespace Data {
@@ -27,6 +28,10 @@ export namespace Data {
   export type Subscription = InferData<SubscriptionTransformer>
   export namespace Subscription {
     export type Variants = InferVariants<SubscriptionTransformer>
+  }
+  export type Tagging = InferData<TaggingTransformer>
+  export namespace Tagging {
+    export type Variants = InferVariants<TaggingTransformer>
   }
   export type User = InferData<UserTransformer>
   export namespace User {

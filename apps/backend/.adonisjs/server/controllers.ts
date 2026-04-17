@@ -12,4 +12,5 @@ export const controllers = {
   RecentlyReadEntries: () => import('#controllers/recently_read_entries_controller'),
   StarredEntries: () => import('#controllers/starred_entries_controller'),
   Subscriptions: () => import('#controllers/subscriptions_controller'),
+  Taggings: () => import('#controllers/taggings_controller'),
 }
