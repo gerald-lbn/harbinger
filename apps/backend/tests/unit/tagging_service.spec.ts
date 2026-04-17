@@ -4,6 +4,7 @@ import { UserFactory } from '#database/factories/user_factory'
 import { FeedFactory } from '#database/factories/feed_factory'
 import { TaggingService } from '#services/tagging_service'
 import { TagFactory } from '#database/factories/tag_factory'
+import { TaggingFactory } from '#database/factories/tagging_factory'
 
 test.group('Tagging service', (group) => {
   group.each.setup(() => testUtils.db().truncate())
@@ -51,5 +52,20 @@ test.group('Tagging service', (group) => {
 
     assert.isFalse(created)
     assert.exists(tagging.id)
+  })
+
+  test('getUserTaggings returns all taggings for a user', async ({ assert }) => {
+    const service = new TaggingService()
+    const user = await UserFactory.create()
+    const feed = await FeedFactory.create()
+
+    await TaggingFactory.merge({ userId: user.id, feedId: feed.id })
+      .with('tag', 1, (t) => t.merge({ userId: user.id, name: 'News' }))
+      .create()
+
+    const taggings = await service.getUserTaggings(user)
+
+    assert.lengthOf(taggings, 1)
+    assert.equal(taggings[0].tag.name, 'News')
   })
 })

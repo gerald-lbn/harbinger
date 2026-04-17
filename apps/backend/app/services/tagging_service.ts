@@ -2,6 +2,10 @@ import type User from '#models/user'
 import Tagging from '#models/tagging'
 
 export class TaggingService {
+  async getUserTaggings(user: User): Promise<Tagging[]> {
+    return await user.related('taggings').query().preload('tag').orderBy('id', 'asc')
+  }
+
   async createTagging(
     user: User,
     feedId: number,
