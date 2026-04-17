@@ -10,6 +10,18 @@ export class TaggingService {
     return await Tagging.query().where('id', id).preload('tag').first()
   }
 
+  /**
+   * Deletes a tagging for a user.
+   */
+  async deleteTagging(user: User, id: number): Promise<boolean> {
+    const tagging = await user.related('taggings').query().where('id', id).first()
+
+    if (!tagging) return false
+
+    await tagging.delete()
+    return true
+  }
+
   async createTagging(
     user: User,
     feedId: number,

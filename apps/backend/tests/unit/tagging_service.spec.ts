@@ -91,4 +91,44 @@ test.group('Tagging service', (group) => {
 
     assert.isNull(tagging)
   })
+
+  test('deleteTagging deletes a tagging for a user', async ({ assert }) => {
+    const service = new TaggingService()
+    const user = await UserFactory.create()
+    const feed = await FeedFactory.create()
+
+    const tagging = await TaggingFactory.merge({ userId: user.id, feedId: feed.id })
+      .with('tag', 1, (t) => t.merge({ userId: user.id, name: 'Tech' }))
+      .create()
+
+    const deleted = await service.deleteTagging(user, tagging.id)
+
+    assert.isTrue(deleted)
+    const exists = await service.getTaggingById(tagging.id)
+    assert.isNull(exists)
+  })
+
+  test('deleteTagging returns false when it does not exist', async ({ assert }) => {
+    const service = new TaggingService()
+    const user = await UserFactory.create()
+
+    const deleted = await service.deleteTagging(user, 999)
+
+    assert.isFalse(deleted)
+  })
+
+  test('deleteTagging returns false when not owned by the user', async ({ assert }) => {
+    const service = new TaggingService()
+    const user = await UserFactory.create()
+    const otherUser = await UserFactory.create()
+    const feed = await FeedFactory.create()
+
+    const tagging = await TaggingFactory.merge({ userId: otherUser.id, feedId: feed.id })
+      .with('tag', 1, (t) => t.merge({ userId: otherUser.id, name: 'Tech' }))
+      .create()
+
+    const deleted = await service.deleteTagging(user, tagging.id)
+
+    assert.isFalse(deleted)
+  })
 })
