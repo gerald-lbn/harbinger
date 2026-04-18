@@ -2,6 +2,7 @@ import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 import { TagService } from '#services/tag_service'
 import TagTransformer from '#transformers/tag_transformer'
+import { tagIdValidator, updateTagValidator } from '#validators/tag'
 
 @inject()
 export default class TagsController {
@@ -23,14 +24,21 @@ export default class TagsController {
   async store({ request }: HttpContext) {}
 
   /**
-   * Show individual record
-   */
-  async show({ params }: HttpContext) {}
-
-  /**
    * Handle form submission for the edit action
    */
-  async update({ params, request }: HttpContext) {}
+  async update({ auth, params, request, response, serialize }: HttpContext) {
+    const { id } = await tagIdValidator.validate(params)
+    const { name } = await request.validateUsing(updateTagValidator)
+    const user = auth.getUserOrFail()
+
+    const tag = await this.tagService.renameTag(user, id, name)
+
+    if (!tag) {
+      return response.notFound()
+    }
+
+    return serialize(TagTransformer.transform(tag))
+  }
 
   /**
    * Delete record
