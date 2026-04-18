@@ -41,11 +41,11 @@ test.group('Delete subscription', (group) => {
     response.assertStatus(404)
   })
 
-  test('returns 422 when sending an invalid ID (non-numeric)', async ({ client }) => {
+  test('returns 404 when sending an invalid ID (non-numeric)', async ({ client }) => {
     const user = await UserFactory.create()
     const response = await client.delete('/api/v1/subscriptions/invalid-id').loginAs(user)
 
-    response.assertStatus(422)
+    response.assertStatus(404)
   })
 
   test('returns 401 when user is not authenticated', async ({ client }) => {

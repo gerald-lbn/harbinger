@@ -74,14 +74,14 @@ test.group('Update subscription', (group) => {
     response.assertStatus(422)
   })
 
-  test('returns 422 when providing an invalid ID (non-numeric)', async ({ client }) => {
+  test('returns 404 when providing an invalid ID (non-numeric)', async ({ client }) => {
     const user = await UserFactory.create()
     const response = await client
       .patch('/api/v1/subscriptions/invalid-id')
       .loginAs(user)
       .json({ title: 'New Title' })
 
-    response.assertStatus(422)
+    response.assertStatus(404)
   })
 
   test('returns 401 when user is not authenticated', async ({ client }) => {

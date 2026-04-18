@@ -89,12 +89,12 @@ test.group('List feed entries', (group) => {
     assert.lengthOf(response.body(), 2)
   })
 
-  test('returns 422 tracking validation errors on empty feed_id', async ({ client }) => {
+  test('returns 404 on invalid feed_id (non-numeric)', async ({ client }) => {
     const user = await UserFactory.create()
 
     const response = await client.get(`/api/v1/feeds/abc/entries`).loginAs(user)
 
-    response.assertStatus(422)
+    response.assertStatus(404)
   })
 
   test('returns 401 when the user is not authenticated', async ({ client }) => {
