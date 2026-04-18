@@ -2,7 +2,7 @@ import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 import { TaggingService } from '#services/tagging_service'
 import TaggingTransformer from '#transformers/tagging_transformer'
-import { createTaggingValidator, taggingIdValidator } from '#validators/tagging'
+import { createTaggingValidator } from '#validators/tagging'
 
 @inject()
 export default class TaggingsController {
@@ -36,10 +36,9 @@ export default class TaggingsController {
    * Show individual record
    */
   async show({ auth, params, response, serialize }: HttpContext) {
-    const { id } = await taggingIdValidator.validate(params)
     const user = auth.getUserOrFail()
 
-    const tagging = await this.taggingService.getTaggingById(user, id)
+    const tagging = await this.taggingService.getTaggingById(user, params.id)
 
     if (!tagging) {
       return response.notFound()
@@ -52,16 +51,15 @@ export default class TaggingsController {
    * Delete record
    */
   async destroy({ auth, params, response }: HttpContext) {
-    const { id } = await taggingIdValidator.validate(params)
     const user = auth.getUserOrFail()
 
-    const tagging = await this.taggingService.getTaggingById(user, id)
+    const tagging = await this.taggingService.getTaggingById(user, params.id)
 
     if (!tagging) {
       return response.notFound()
     }
 
-    await this.taggingService.deleteTagging(user, id)
+    await this.taggingService.deleteTagging(user, params.id)
     return response.noContent()
   }
 }
