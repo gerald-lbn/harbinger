@@ -46,4 +46,19 @@ export interface ApiDefinition {
       destroy: typeof routes['starred_entries.starred_entries.destroy']
     }
   }
+  taggings: {
+    taggings: {
+      index: typeof routes['taggings.taggings.index']
+      show: typeof routes['taggings.taggings.show']
+      store: typeof routes['taggings.taggings.store']
+      destroy: typeof routes['taggings.taggings.destroy']
+    }
+  }
+  tags: {
+    tags: {
+      index: typeof routes['tags.tags.index']
+      update: typeof routes['tags.tags.update']
+      destroy: typeof routes['tags.tags.destroy']
+    }
+  }
 }

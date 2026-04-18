@@ -102,6 +102,48 @@ const routes = {
     tokens: [{"old":"/api/v1/starred_entries","type":0,"val":"api","end":""},{"old":"/api/v1/starred_entries","type":0,"val":"v1","end":""},{"old":"/api/v1/starred_entries","type":0,"val":"starred_entries","end":""}],
     types: placeholder as Registry['starred_entries.starred_entries.destroy']['types'],
   },
+  'taggings.taggings.index': {
+    methods: ["GET","HEAD"],
+    pattern: '/api/v1/taggings',
+    tokens: [{"old":"/api/v1/taggings","type":0,"val":"api","end":""},{"old":"/api/v1/taggings","type":0,"val":"v1","end":""},{"old":"/api/v1/taggings","type":0,"val":"taggings","end":""}],
+    types: placeholder as Registry['taggings.taggings.index']['types'],
+  },
+  'taggings.taggings.show': {
+    methods: ["GET","HEAD"],
+    pattern: '/api/v1/taggings/:id',
+    tokens: [{"old":"/api/v1/taggings/:id","type":0,"val":"api","end":""},{"old":"/api/v1/taggings/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/taggings/:id","type":0,"val":"taggings","end":""},{"old":"/api/v1/taggings/:id","type":1,"val":"id","end":""}],
+    types: placeholder as Registry['taggings.taggings.show']['types'],
+  },
+  'taggings.taggings.store': {
+    methods: ["POST"],
+    pattern: '/api/v1/taggings',
+    tokens: [{"old":"/api/v1/taggings","type":0,"val":"api","end":""},{"old":"/api/v1/taggings","type":0,"val":"v1","end":""},{"old":"/api/v1/taggings","type":0,"val":"taggings","end":""}],
+    types: placeholder as Registry['taggings.taggings.store']['types'],
+  },
+  'taggings.taggings.destroy': {
+    methods: ["DELETE"],
+    pattern: '/api/v1/taggings/:id',
+    tokens: [{"old":"/api/v1/taggings/:id","type":0,"val":"api","end":""},{"old":"/api/v1/taggings/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/taggings/:id","type":0,"val":"taggings","end":""},{"old":"/api/v1/taggings/:id","type":1,"val":"id","end":""}],
+    types: placeholder as Registry['taggings.taggings.destroy']['types'],
+  },
+  'tags.tags.index': {
+    methods: ["GET","HEAD"],
+    pattern: '/api/v1/tags',
+    tokens: [{"old":"/api/v1/tags","type":0,"val":"api","end":""},{"old":"/api/v1/tags","type":0,"val":"v1","end":""},{"old":"/api/v1/tags","type":0,"val":"tags","end":""}],
+    types: placeholder as Registry['tags.tags.index']['types'],
+  },
+  'tags.tags.update': {
+    methods: ["PATCH"],
+    pattern: '/api/v1/tags/:id',
+    tokens: [{"old":"/api/v1/tags/:id","type":0,"val":"api","end":""},{"old":"/api/v1/tags/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/tags/:id","type":0,"val":"tags","end":""},{"old":"/api/v1/tags/:id","type":1,"val":"id","end":""}],
+    types: placeholder as Registry['tags.tags.update']['types'],
+  },
+  'tags.tags.destroy': {
+    methods: ["DELETE"],
+    pattern: '/api/v1/tags/:id',
+    tokens: [{"old":"/api/v1/tags/:id","type":0,"val":"api","end":""},{"old":"/api/v1/tags/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/tags/:id","type":0,"val":"tags","end":""},{"old":"/api/v1/tags/:id","type":1,"val":"id","end":""}],
+    types: placeholder as Registry['tags.tags.destroy']['types'],
+  },
 } as const satisfies Record<string, AdonisEndpoint>
 
 export { routes }

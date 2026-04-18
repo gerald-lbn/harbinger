@@ -107,12 +107,12 @@ export interface Registry {
     methods: ["DELETE"]
     pattern: '/api/v1/subscriptions/:id'
     types: {
-      body: ExtractBody<InferInput<(typeof import('#validators/subscription').subscriptionIdValidator)>>
+      body: {}
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
-      query: ExtractQuery<InferInput<(typeof import('#validators/subscription').subscriptionIdValidator)>>
+      query: {}
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/subscriptions_controller').default['destroy']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/subscriptions_controller').default['destroy']>>> | { status: 422; response: { errors: SimpleError[] } }
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/subscriptions_controller').default['destroy']>>>
     }
   }
   'subscriptions.subscriptions.update': {
@@ -134,9 +134,9 @@ export interface Registry {
       body: {}
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
-      query: ExtractQueryForGet<InferInput<(typeof import('#validators/subscription').subscriptionIdValidator)>>
+      query: {}
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/subscriptions_controller').default['show']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/subscriptions_controller').default['show']>>> | { status: 422; response: { errors: SimpleError[] } }
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/subscriptions_controller').default['show']>>>
     }
   }
   'recently_read_entries.recently_read_entries.index': {
@@ -197,6 +197,90 @@ export interface Registry {
       query: ExtractQuery<InferInput<(typeof import('#validators/starred_entry').deleteStarredEntriesValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/starred_entries_controller').default['destroy']>>>
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/starred_entries_controller').default['destroy']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
+  'taggings.taggings.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/taggings'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/taggings_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/taggings_controller').default['index']>>>
+    }
+  }
+  'taggings.taggings.show': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/taggings/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/taggings_controller').default['show']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/taggings_controller').default['show']>>>
+    }
+  }
+  'taggings.taggings.store': {
+    methods: ["POST"]
+    pattern: '/api/v1/taggings'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#validators/tagging').createTaggingValidator)>>
+      paramsTuple: []
+      params: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/tagging').createTaggingValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/taggings_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/taggings_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
+  'taggings.taggings.destroy': {
+    methods: ["DELETE"]
+    pattern: '/api/v1/taggings/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/taggings_controller').default['destroy']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/taggings_controller').default['destroy']>>>
+    }
+  }
+  'tags.tags.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/tags'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/tags_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/tags_controller').default['index']>>>
+    }
+  }
+  'tags.tags.update': {
+    methods: ["PATCH"]
+    pattern: '/api/v1/tags/:id'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#validators/tag').updateTagValidator)>>
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: ExtractQuery<InferInput<(typeof import('#validators/tag').updateTagValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/tags_controller').default['update']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/tags_controller').default['update']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
+  'tags.tags.destroy': {
+    methods: ["DELETE"]
+    pattern: '/api/v1/tags/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/tags_controller').default['destroy']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/tags_controller').default['destroy']>>>
     }
   }
 }
