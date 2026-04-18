@@ -108,13 +108,9 @@ test.group('Subscription service', (group) => {
 
     await user.related('subscriptions').create({ feedId: feed.id, title: 'First Subscription' })
 
-    try {
-      await user.related('subscriptions').create({ feedId: feed.id, title: 'Second Subscription' })
-      assert.fail('Database should have thrown a unique constraint error')
-    } catch (error) {
-      assert.exists(error)
-      console.log(error)
-      assert.include(error.message, 'UNIQUE constraint failed')
-    }
+    await assert.rejects(
+      () => user.related('subscriptions').create({ feedId: feed.id, title: 'Second Subscription' }),
+      /UNIQUE constraint failed/
+    )
   })
 })
