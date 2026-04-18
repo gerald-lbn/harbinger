@@ -1,11 +1,7 @@
 import { FeedDiscoveryService } from '#services/feed_discovery_service'
 import { SubscriptionService } from '#services/subscription_service'
 import SubscriptionTransformer from '#transformers/subscription_transformer'
-import {
-  createSubscriptionValidator,
-  subscriptionIdValidator,
-  updateSubscriptionValidator,
-} from '#validators/subscription'
+import { createSubscriptionValidator, updateSubscriptionValidator } from '#validators/subscription'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 
@@ -14,7 +10,7 @@ export default class SubscriptionsController {
   constructor(
     private subscription_service: SubscriptionService,
     private discovery_service: FeedDiscoveryService
-  ) {}
+  ) { }
 
   /**
    * Display a list of resource
@@ -29,7 +25,7 @@ export default class SubscriptionsController {
   /**
    * Display form to create a new record
    */
-  async create({}: HttpContext) {}
+  async create({ }: HttpContext) { }
 
   /**
    * Handle form submission for the create action
@@ -59,10 +55,8 @@ export default class SubscriptionsController {
    * Show individual record
    */
   async show({ auth, params, response, serialize }: HttpContext) {
-    const { id } = await subscriptionIdValidator.validate(params)
-
     const user = auth.getUserOrFail()
-    const subscription = await this.subscription_service.getUserSubscriptionAndFeedById(user, id)
+    const subscription = await this.subscription_service.getUserSubscriptionAndFeedById(user, params.id)
 
     if (!subscription) return response.notFound()
 
@@ -72,21 +66,18 @@ export default class SubscriptionsController {
   /**
    * Edit individual record
    */
-  async edit({}: HttpContext) {}
+  async edit({ }: HttpContext) { }
 
   /**
    * Handle form submission for the edit action
    */
   async update({ auth, params, request, response, serialize }: HttpContext) {
-    const { id, title } = await updateSubscriptionValidator.validate({
-      ...params,
-      ...request.body(),
-    })
+    const { title } = await request.validateUsing(updateSubscriptionValidator)
 
     const user = auth.getUserOrFail()
     const subscription = await this.subscription_service.updateUserSubscriptionTitle(
       user,
-      id,
+      params.id,
       title
     )
 
@@ -99,10 +90,9 @@ export default class SubscriptionsController {
    * Delete record
    */
   async destroy({ auth, params, response }: HttpContext) {
-    const { id } = await subscriptionIdValidator.validate(params)
     const user = auth.getUserOrFail()
 
-    const deleted = await this.subscription_service.deleteUserSubscriptionById(user, id)
+    const deleted = await this.subscription_service.deleteUserSubscriptionById(user, params.id)
     if (!deleted) return response.notFound()
 
     return response.noContent()
