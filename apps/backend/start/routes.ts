@@ -11,6 +11,9 @@ import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 import { controllers } from '#generated/controllers'
 
+router.where('id', router.matchers.number())
+router.where('feed_id', router.matchers.number())
+
 router.get('/', () => {
   return { hello: 'world' }
 })
