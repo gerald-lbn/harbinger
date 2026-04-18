@@ -19,11 +19,6 @@ export default class TagsController {
   }
 
   /**
-   * Handle form submission for the create action
-   */
-  async store({ request }: HttpContext) {}
-
-  /**
    * Handle form submission for the edit action
    */
   async update({ auth, params, request, response, serialize }: HttpContext) {
@@ -43,5 +38,16 @@ export default class TagsController {
   /**
    * Delete record
    */
-  async destroy({ params }: HttpContext) {}
+  async destroy({ auth, params, response }: HttpContext) {
+    const { id } = await tagIdValidator.validate(params)
+    const user = auth.getUserOrFail()
+
+    const success = await this.tagService.deleteTag(user, id)
+
+    if (!success) {
+      return response.notFound()
+    }
+
+    return response.noContent()
+  }
 }
