@@ -19,4 +19,15 @@ export class TagService {
 
     return tag.merge({ name: newName }).save()
   }
+
+  async deleteTag(user: User, id: number): Promise<boolean> {
+    const tag = await user.related('tags').query().where('id', id).first()
+
+    if (!tag) {
+      return false
+    }
+
+    await tag.delete()
+    return true
+  }
 }
