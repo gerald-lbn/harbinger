@@ -13,4 +13,5 @@ export const controllers = {
   StarredEntries: () => import('#controllers/starred_entries_controller'),
   Subscriptions: () => import('#controllers/subscriptions_controller'),
   Taggings: () => import('#controllers/taggings_controller'),
+  Tags: () => import('#controllers/tags_controller'),
 }
