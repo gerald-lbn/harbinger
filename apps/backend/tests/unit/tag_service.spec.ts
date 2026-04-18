@@ -99,7 +99,9 @@ test.group('Tag service', (group) => {
     const service = new TagService()
     const user = await UserFactory.create()
     const tag = await TagFactory.merge({ userId: user.id }).create()
-    await user.related('taggings').create({ feedId: (await FeedFactory.create()).id, tagId: tag.id })
+    await user
+      .related('taggings')
+      .create({ feedId: (await FeedFactory.create()).id, tagId: tag.id })
 
     const result = await service.deleteTag(user, tag.id)
 
