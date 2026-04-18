@@ -15,3 +15,7 @@
 |     .run()
 |
 */
+import CrawlFeeds from '#jobs/crawl_feeds'
+import env from '#start/env'
+
+CrawlFeeds.schedule({}).cron(env.get('CRON_FEED_CRAWLER')).run()

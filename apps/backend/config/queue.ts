@@ -6,7 +6,7 @@ export default defineConfig({
 
   adapters: {
     database: drivers.database({
-      connectionName: 'primary',
+      connectionName: 'sqlite',
     }),
     sync: drivers.sync(),
   },
