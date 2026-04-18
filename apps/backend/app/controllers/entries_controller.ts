@@ -13,12 +13,9 @@ export default class EntriesController {
   async index({ request, auth, params }: HttpContext) {
     const user = auth.getUserOrFail()
 
-    const payload = await feedEntriesPaginationValidator.validate({
-      ...params,
-      ...request.qs(),
-    })
+    const payload = await feedEntriesPaginationValidator.validate(request.qs())
 
-    const entries = await this.entryService.getFeedEntries(user, payload.feed_id, {
+    const entries = await this.entryService.getFeedEntries(user, params.feed_id, {
       page: payload.page,
       perPage: payload.per_page,
       since: payload?.since?.toJSDate(),
