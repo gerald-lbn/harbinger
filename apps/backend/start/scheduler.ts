@@ -17,5 +17,8 @@
 */
 import CrawlFeeds from '#jobs/crawl_feeds'
 import env from '#start/env'
+import app from '@adonisjs/core/services/app'
 
-CrawlFeeds.schedule({}).cron(env.get('CRON_FEED_CRAWLER')).run()
+app.ready(() => {
+  CrawlFeeds.schedule({}).cron(env.get('CRON_FEED_CRAWLER')).run()
+})
