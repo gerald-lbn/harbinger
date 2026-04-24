@@ -5,7 +5,7 @@ import { UserFactory } from '#database/factories/user_factory'
 import { EntryFactory } from '#database/factories/entry_factory'
 
 export const RecentlyReadEntryFactory = factory
-  .define(RecentlyReadEntry, async ({ faker }) => {
+  .define(RecentlyReadEntry, async ({}) => {
     return {}
   })
   .relation('user', () => UserFactory)
