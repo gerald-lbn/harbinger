@@ -11,7 +11,8 @@ test.group('Manage taggings', (group) => {
     const user = await UserFactory.create()
     const feed = await FeedFactory.create()
 
-    const response = await client.post('/api/v1/taggings')
+    const response = await client
+      .post('/api/v1/taggings')
       .json({ feed_id: feed.id, name: 'Tech' })
       .loginAs(user)
 
@@ -19,6 +20,7 @@ test.group('Manage taggings', (group) => {
     response.assertHeader('Location', '/api/v1/taggings/1')
     response.assertBody({
       data: {
+        // @ts-ignore Transformer has the id key
         id: 1,
         feedId: feed.id,
         name: 'Tech',
@@ -30,10 +32,9 @@ test.group('Manage taggings', (group) => {
     const user = await UserFactory.create()
     const feed = await FeedFactory.create()
 
-    await client.post('/api/v1/taggings')
-      .json({ feed_id: feed.id, name: 'Tech' })
-      .loginAs(user)
-    const response = await client.post('/api/v1/taggings')
+    await client.post('/api/v1/taggings').json({ feed_id: feed.id, name: 'Tech' }).loginAs(user)
+    const response = await client
+      .post('/api/v1/taggings')
       .json({ feed_id: feed.id, name: 'Tech' })
       .redirects(0)
       .loginAs(user)
@@ -54,7 +55,9 @@ test.group('Manage taggings', (group) => {
     response.assertStatus(204)
   })
 
-  test('DELETE /api/v1/taggings/:id returns 404 when deleting another user tagging', async ({ client }) => {
+  test('DELETE /api/v1/taggings/:id returns 404 when deleting another user tagging', async ({
+    client,
+  }) => {
     const user = await UserFactory.create()
     const otherUser = await UserFactory.create()
     const feed = await FeedFactory.create()
