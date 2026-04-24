@@ -70,6 +70,10 @@ export default defineConfig({
     () => import('#start/kernel'),
     () => import('#start/validator'),
     {
+      file: () => import('#start/automigrate'),
+      environment: ['web'],
+    },
+    {
       file: () => import('#start/scheduler'),
       environment: ['web'],
     }

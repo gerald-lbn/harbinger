@@ -32,5 +32,7 @@ export default await Env.create(new URL('../', import.meta.url), {
   */
   QUEUE_DRIVER: Env.schema.enum(['redis', 'database', 'sync'] as const),
 
-  CRON_FEED_CRAWLER: Env.schema.string()
+  CRON_FEED_CRAWLER: Env.schema.string(),
+
+  DATABASE_AUTOMIGRATE: Env.schema.boolean()
 })
