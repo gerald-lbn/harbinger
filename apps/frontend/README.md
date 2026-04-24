@@ -37,7 +37,7 @@ npm install @tuyau/core
 ```typescript
 // src/lib/api.ts
 import { createTuyau } from '@tuyau/core/client'
-import { registry } from '@api-starter-kit/backend/registry'
+import { registry } from '@harbinger/backend/registry'
 
 export const api = createTuyau({
   baseUrl: import.meta.env.VITE_API_URL || 'http://localhost:3333',
@@ -51,7 +51,7 @@ export const api = createTuyau({
 // src/routes/users.tsx
 import { createFileRoute } from '@tanstack/react-router'
 import { api } from '@/lib/api'
-import type { Data } from '@api-starter-kit/backend/data'
+import type { Data } from '@harbinger/backend/data'
 
 export const Route = createFileRoute('/users')({
   loader: async () => {
@@ -99,7 +99,7 @@ npm install @tuyau/core
 ```typescript
 // plugins/api.ts
 import { createTuyau } from '@tuyau/core/client'
-import { registry } from '@api-starter-kit/backend/registry'
+import { registry } from '@harbinger/backend/registry'
 
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig()
