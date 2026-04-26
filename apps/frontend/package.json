@@ -16,11 +16,13 @@
 	"devDependencies": {
 		"@eslint/compat": "^2.0.4",
 		"@eslint/js": "^10.0.1",
+		"@fontsource-variable/geist": "^5.2.8",
 		"@fontsource-variable/oxanium": "^5.2.8",
 		"@internationalized/date": "^3.12.1",
 		"@sveltejs/adapter-node": "^5.5.4",
 		"@sveltejs/kit": "^2.57.0",
 		"@sveltejs/vite-plugin-svelte": "^7.0.0",
+		"@tabler/icons-svelte": "^3.41.1",
 		"@tailwindcss/vite": "^4.2.2",
 		"@types/node": "^24",
 		"bits-ui": "^2.18.0",
@@ -43,5 +45,8 @@
 		"typescript": "^6.0.2",
 		"typescript-eslint": "^8.58.1",
 		"vite": "^8.0.7"
+	},
+	"dependencies": {
+		"@harbinger/backend": "*"
 	}
 }
